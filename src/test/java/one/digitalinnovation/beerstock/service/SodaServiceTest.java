@@ -142,34 +142,34 @@ public class SodaServiceTest {
         // then
         sodaService.deleteById(expectedDeletedSodaDTO.getId());
 
-        verify(beerRepository, times(1)).findById(expectedDeletedBeerDTO.getId());
-        verify(beerRepository, times(1)).deleteById(expectedDeletedBeerDTO.getId());
+        verify(sodaRepository, times(1)).findById(expectedDeletedSodaDTO.getId());
+        verify(sodaRepository, times(1)).deleteById(expectedDeletedSodaDTO.getId());
     }
 
     @Test
-    void whenIncrementIsCalledThenIncrementBeerStock() throws SodaNotFoundException, SodaStockExceededException {
+    void whenIncrementIsCalledThenIncrementSodaStock() throws SodaNotFoundException, SodaStockExceededException {
         //given
-        SodaDTO expectedBeerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
-        Soda expectedBeer = beerMapper.toModel(expectedBeerDTO);
+        SodaDTO expectedSodaDTO = SodaDTOBuilder.builder().build().toSodaDTO();
+        Soda expectedSoda = sodaMapper.toModel(expectedSodaDTO);
 
         //when
-        when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
-        when(beerRepository.save(expectedBeer)).thenReturn(expectedBeer);
+        when(sodaRepository.findById(expectedSodaDTO.getId())).thenReturn(Optional.of(expectedBeer));
+        when(sodaRepository.save(expectedSoda)).thenReturn(expectedSoda);
 
         int quantityToIncrement = 10;
-        int expectedQuantityAfterIncrement = expectedBeerDTO.getQuantity() + quantityToIncrement;
+        int expectedQuantityAfterIncrement = expectedSodaDTO.getQuantity() + quantityToIncrement;
 
         // then
-        SodaDTO incrementedBeerDTO = beerService.increment(expectedBeerDTO.getId(), quantityToIncrement);
+        SodaDTO incrementedSodaDTO = sodaService.increment(expectedSodaDTO.getId(), quantityToIncrement);
 
-        assertThat(expectedQuantityAfterIncrement, equalTo(incrementedBeerDTO.getQuantity()));
-        assertThat(expectedQuantityAfterIncrement, lessThan(expectedBeerDTO.getMax()));
+        assertThat(expectedQuantityAfterIncrement, equalTo(incrementedSodaDTO.getQuantity()));
+        assertThat(expectedQuantityAfterIncrement, lessThan(expectedSodaDTO.getMax()));
     }
 
     @Test
     void whenIncrementIsGreatherThanMaxThenThrowException() {
         SodaDTO expectedBeerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
-        Soda expectedBeer = beerMapper.toModel(expectedBeerDTO);
+        Soda expectedSoda = sodaMapper.toModel(expectedSodaDTO);
 
         when(beerRepository.findById(expectedBeerDTO.getId())).thenReturn(Optional.of(expectedBeer));
 
