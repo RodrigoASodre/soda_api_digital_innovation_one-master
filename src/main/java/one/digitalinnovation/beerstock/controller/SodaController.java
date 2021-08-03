@@ -1,11 +1,11 @@
 package one.digitalinnovation.beerstock.controller;
 
 import lombok.AllArgsConstructor;
-import one.digitalinnovation.beerstock.dto.BeerDTO;
+import one.digitalinnovation.beerstock.dto.SodaDTO;
 import one.digitalinnovation.beerstock.dto.QuantityDTO;
-import one.digitalinnovation.beerstock.exception.BeerAlreadyRegisteredException;
-import one.digitalinnovation.beerstock.exception.BeerNotFoundException;
-import one.digitalinnovation.beerstock.exception.BeerStockExceededException;
+import one.digitalinnovation.beerstock.exception.SodaAlreadyRegisteredException;
+import one.digitalinnovation.beerstock.exception.SodaNotFoundException;
+import one.digitalinnovation.beerstock.exception.SodaStockExceededException;
 import one.digitalinnovation.beerstock.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,34 +25,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/beers")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class BeerController implements BeerControllerDocs {
+public class SodaController implements SodaControllerDocs {
 
     private final BeerService beerService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BeerDTO createBeer(@RequestBody @Valid BeerDTO beerDTO) throws BeerAlreadyRegisteredException {
+    public SodaDTO createBeer(@RequestBody @Valid SodaDTO beerDTO) throws SodaAlreadyRegisteredException {
         return beerService.createBeer(beerDTO);
     }
 
     @GetMapping("/{name}")
-    public BeerDTO findByName(@PathVariable String name) throws BeerNotFoundException {
+    public SodaDTO findByName(@PathVariable String name) throws SodaNotFoundException {
         return beerService.findByName(name);
     }
 
     @GetMapping
-    public List<BeerDTO> listBeers() {
+    public List<SodaDTO> listBeers() {
         return beerService.listAll();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable Long id) throws BeerNotFoundException {
+    public void deleteById(@PathVariable Long id) throws SodaNotFoundException {
         beerService.deleteById(id);
     }
 
     @PatchMapping("/{id}/increment")
-    public BeerDTO increment(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws BeerNotFoundException, BeerStockExceededException {
+    public SodaDTO increment(@PathVariable Long id, @RequestBody @Valid QuantityDTO quantityDTO) throws SodaNotFoundException, SodaStockExceededException {
         return beerService.increment(id, quantityDTO.getQuantity());
     }
 }

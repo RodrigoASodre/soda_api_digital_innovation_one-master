@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import one.digitalinnovation.beerstock.enums.BeerType;
+import one.digitalinnovation.beerstock.enums.SodaType;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BeerDTO {
+public class SodaDTO {
 
     private Long id;
 
@@ -38,5 +38,5 @@ public class BeerDTO {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private BeerType type;
+    private SodaType type;
 }

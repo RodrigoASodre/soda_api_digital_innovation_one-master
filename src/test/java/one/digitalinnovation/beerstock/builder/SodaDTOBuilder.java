@@ -1,15 +1,11 @@
 package one.digitalinnovation.beerstock.builder;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Builder;
-import one.digitalinnovation.beerstock.dto.BeerDTO;
-import one.digitalinnovation.beerstock.enums.BeerType;
+import one.digitalinnovation.beerstock.dto.SodaDTO;
+import one.digitalinnovation.beerstock.enums.SodaType;
 
 @Builder
-public class BeerDTOBuilder {
+public class SodaDTOBuilder {
 
     @Builder.Default
     private Long id = 1L;
@@ -27,10 +23,10 @@ public class BeerDTOBuilder {
     private int quantity = 10;
 
     @Builder.Default
-    private BeerType type = BeerType.LAGER;
+    private SodaType type = SodaType.LAGER;
 
-    public BeerDTO toBeerDTO() {
-        return new BeerDTO(id,
+    public SodaDTO toBeerDTO() {
+        return new SodaDTO(id,
                 name,
                 brand,
                 max,

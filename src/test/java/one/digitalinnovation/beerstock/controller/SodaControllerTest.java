@@ -1,10 +1,9 @@
 package one.digitalinnovation.beerstock.controller;
 
-import one.digitalinnovation.beerstock.builder.BeerDTOBuilder;
-import one.digitalinnovation.beerstock.dto.BeerDTO;
+import one.digitalinnovation.beerstock.builder.SodaDTOBuilder;
+import one.digitalinnovation.beerstock.dto.SodaDTO;
 import one.digitalinnovation.beerstock.dto.QuantityDTO;
-import one.digitalinnovation.beerstock.exception.BeerNotFoundException;
-import one.digitalinnovation.beerstock.exception.BeerStockExceededException;
+import one.digitalinnovation.beerstock.exception.SodaNotFoundException;
 import one.digitalinnovation.beerstock.service.BeerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,13 +25,12 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-public class BeerControllerTest {
+public class SodaControllerTest {
 
     private static final String BEER_API_URL_PATH = "/api/v1/beers";
     private static final long VALID_BEER_ID = 1L;
@@ -46,7 +44,7 @@ public class BeerControllerTest {
     private BeerService beerService;
 
     @InjectMocks
-    private BeerController beerController;
+    private SodaController beerController;
 
     @BeforeEach
     void setUp() {
@@ -59,7 +57,7 @@ public class BeerControllerTest {
     @Test
     void whenPOSTIsCalledThenABeerIsCreated() throws Exception {
         // given
-        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        SodaDTO beerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
 
         // when
         when(beerService.createBeer(beerDTO)).thenReturn(beerDTO);
@@ -77,7 +75,7 @@ public class BeerControllerTest {
     @Test
     void whenPOSTIsCalledWithoutRequiredFieldThenAnErrorIsReturned() throws Exception {
         // given
-        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        SodaDTO beerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
         beerDTO.setBrand(null);
 
         // then
@@ -90,7 +88,7 @@ public class BeerControllerTest {
     @Test
     void whenGETIsCalledWithValidNameThenOkStatusIsReturned() throws Exception {
         // given
-        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        SodaDTO beerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
 
         //when
         when(beerService.findByName(beerDTO.getName())).thenReturn(beerDTO);
@@ -107,10 +105,10 @@ public class BeerControllerTest {
     @Test
     void whenGETIsCalledWithoutRegisteredNameThenNotFoundStatusIsReturned() throws Exception {
         // given
-        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        SodaDTO beerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
 
         //when
-        when(beerService.findByName(beerDTO.getName())).thenThrow(BeerNotFoundException.class);
+        when(beerService.findByName(beerDTO.getName())).thenThrow(SodaNotFoundException.class);
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get(BEER_API_URL_PATH + "/" + beerDTO.getName())
@@ -121,7 +119,7 @@ public class BeerControllerTest {
     @Test
     void whenGETListWithBeersIsCalledThenOkStatusIsReturned() throws Exception {
         // given
-        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        SodaDTO beerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
 
         //when
         when(beerService.listAll()).thenReturn(Collections.singletonList(beerDTO));
@@ -138,7 +136,7 @@ public class BeerControllerTest {
     @Test
     void whenGETListWithoutBeersIsCalledThenOkStatusIsReturned() throws Exception {
         // given
-        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        SodaDTO beerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
 
         //when
         when(beerService.listAll()).thenReturn(Collections.singletonList(beerDTO));
@@ -152,7 +150,7 @@ public class BeerControllerTest {
     @Test
     void whenDELETEIsCalledWithValidIdThenNoContentStatusIsReturned() throws Exception {
         // given
-        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        SodaDTO beerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
 
         //when
         doNothing().when(beerService).deleteById(beerDTO.getId());
@@ -166,7 +164,7 @@ public class BeerControllerTest {
     @Test
     void whenDELETEIsCalledWithInvalidIdThenNotFoundStatusIsReturned() throws Exception {
         //when
-        doThrow(BeerNotFoundException.class).when(beerService).deleteById(INVALID_BEER_ID);
+        doThrow(SodaNotFoundException.class).when(beerService).deleteById(INVALID_BEER_ID);
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.delete(BEER_API_URL_PATH + "/" + INVALID_BEER_ID)
@@ -180,7 +178,7 @@ public class BeerControllerTest {
                 .quantity(10)
                 .build();
 
-        BeerDTO beerDTO = BeerDTOBuilder.builder().build().toBeerDTO();
+        SodaDTO beerDTO = SodaDTOBuilder.builder().build().toBeerDTO();
         beerDTO.setQuantity(beerDTO.getQuantity() + quantityDTO.getQuantity());
 
         when(beerService.increment(VALID_BEER_ID, quantityDTO.getQuantity())).thenReturn(beerDTO);

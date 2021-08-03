@@ -3,7 +3,7 @@ package one.digitalinnovation.beerstock.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import one.digitalinnovation.beerstock.enums.BeerType;
+import one.digitalinnovation.beerstock.enums.SodaType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Beer {
+public class Soda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class Beer {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BeerType type;
+    private SodaType type;
 
 
 }
